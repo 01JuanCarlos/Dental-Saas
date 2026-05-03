@@ -1,6 +1,54 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowLeft, Save, RotateCcw } from 'lucide-react'
+import { ArrowLeft, Save, RotateCcw, Sliders } from 'lucide-react'
 import { FIELD_DEFS, savePlantilla } from '../../utils/db.js'
+
+// ─── Mobile slider editor for a single field ────────────────
+function MobileFieldSlider({ fieldDef, placement, onChange }) {
+  const xPct = placement?.xPct ?? 0.1
+  const yPct = placement?.yPct ?? 0.1
+
+  return (
+    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-6 h-6 rounded-full bg-verde flex items-center justify-center text-white text-xs font-bold">
+          ✓
+        </div>
+        <span className="font-semibold text-gray-800 text-sm">{fieldDef.label}</span>
+        <span className="ml-auto text-xs text-gray-400 tabular-nums">
+          {Math.round(xPct * 100)}% / {Math.round(yPct * 100)}%
+        </span>
+      </div>
+
+      <div className="space-y-3">
+        <div>
+          <div className="flex justify-between text-xs text-gray-500 mb-1">
+            <span>← Horizontal →</span>
+            <span className="font-mono text-verde">{Math.round(xPct * 100)}%</span>
+          </div>
+          <input
+            type="range" min={0} max={100} step={1}
+            value={Math.round(xPct * 100)}
+            onChange={(e) => onChange({ xPct: Number(e.target.value) / 100, yPct })}
+            className="w-full accent-verde"
+          />
+        </div>
+
+        <div>
+          <div className="flex justify-between text-xs text-gray-500 mb-1">
+            <span>↑ Vertical ↓</span>
+            <span className="font-mono text-verde">{Math.round(yPct * 100)}%</span>
+          </div>
+          <input
+            type="range" min={0} max={100} step={1}
+            value={Math.round(yPct * 100)}
+            onChange={(e) => onChange({ xPct, yPct: Number(e.target.value) / 100 })}
+            className="w-full accent-verde"
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // ─────────────────────────────────────────────────────────────
 // COORDINATE SYSTEM — single source of truth: PERCENTAGES
@@ -32,6 +80,15 @@ export default function StepCalibrate({ blob, blobUrl, savedConfig, onSave, onBa
   const [fontSize, setFontSize] = useState(0)
   const [saving, setSaving] = useState(false)
   const [canvasReady, setCanvasReady] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile screen
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const canvasRef = useRef(null)
   const wrapRef = useRef(null)
@@ -205,7 +262,10 @@ export default function StepCalibrate({ blob, blobUrl, savedConfig, onSave, onBa
 
         <div className="mx-4 mt-4 bg-green-50 border-l-4 border-green-500 rounded-r-xl p-3">
           <p className="text-xs text-green-800 leading-relaxed">
-            <strong>Flujo:</strong> Selecciona campo → clic en la imagen → arrastra para ajustar → Guardar
+            {isMobile
+              ? <><strong>Modo móvil:</strong> Selecciona un campo y usa los sliders para ajustar su posición horizontal y vertical.</>
+              : <><strong>Flujo:</strong> Selecciona campo → clic en la imagen → arrastra para ajustar → Guardar</>
+            }
           </p>
         </div>
 
@@ -221,38 +281,93 @@ export default function StepCalibrate({ blob, blobUrl, savedConfig, onSave, onBa
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-2">
-            {FIELD_DEFS.map((f) => {
-              const placed  = !!placements[f.key]
-              const isActive = activeField === f.key
-              return (
-                <button
-                  key={f.key}
-                  onClick={() => setActiveField(isActive ? null : f.key)}
-                  className={`w-full px-4 py-3 rounded-xl border text-sm font-semibold text-left flex items-center gap-3 transition-all ${
-                    isActive
-                      ? 'border-naranja text-naranja bg-naranja-pale outline outline-2 outline-naranja shadow-md'
-                      : placed
-                        ? 'border-verde text-verde bg-verde-pale'
-                        : 'border-gray-200 text-gray-600 bg-gray-50 hover:border-verde/40'
-                  }`}
-                >
-                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-bold ${
-                    isActive ? 'bg-naranja text-white' : placed ? 'bg-verde text-white' : 'bg-gray-200 text-gray-500'
-                  }`}>
-                    {placed ? '✓' : isActive ? '→' : '+'}
-                  </span>
-                  <span>{f.label}</span>
-                  {isActive && <span className="ml-auto text-[10px] text-naranja font-normal">Clic en imagen →</span>}
-                  {placed && !isActive && (
-                    <span className="ml-auto text-[10px] text-gray-400 font-normal tabular-nums">
-                      {Math.round(placements[f.key].xPct * 100)}%, {Math.round(placements[f.key].yPct * 100)}%
+          {/* Mobile: mostrar sliders para el campo activo */}
+          {isMobile ? (
+            <div className="space-y-2">
+              {FIELD_DEFS.map((f) => {
+                const placed   = !!placements[f.key]
+                const isActive = activeField === f.key
+                return (
+                  <div key={f.key}>
+                    <button
+                      onClick={() => {
+                        // Si no está colocado aún, inicializar en el centro
+                        if (!placements[f.key]) {
+                          setPlacements(prev => ({ ...prev, [f.key]: { xPct: 0.1, yPct: 0.1 } }))
+                        }
+                        setActiveField(isActive ? null : f.key)
+                      }}
+                      className={`w-full px-4 py-3 rounded-xl border text-sm font-semibold text-left flex items-center gap-3 transition-all ${
+                        isActive
+                          ? 'border-naranja text-naranja bg-naranja-pale outline outline-2 outline-naranja shadow-md'
+                          : placed
+                            ? 'border-verde text-verde bg-verde-pale'
+                            : 'border-gray-200 text-gray-600 bg-gray-50 hover:border-verde/40'
+                      }`}
+                    >
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-bold ${
+                        isActive ? 'bg-naranja text-white' : placed ? 'bg-verde text-white' : 'bg-gray-200 text-gray-500'
+                      }`}>
+                        {placed ? '✓' : '+'}
+                      </span>
+                      <span>{f.label}</span>
+                      {placed && !isActive && (
+                        <span className="ml-auto text-[10px] text-gray-400 font-normal tabular-nums">
+                          {Math.round(placements[f.key].xPct * 100)}%, {Math.round(placements[f.key].yPct * 100)}%
+                        </span>
+                      )}
+                      {isActive && <span className="ml-auto text-[10px] text-naranja">ajustando ▼</span>}
+                    </button>
+
+                    {/* Sliders expandibles */}
+                    {isActive && (
+                      <div className="mt-1 mb-2">
+                        <MobileFieldSlider
+                          fieldDef={f}
+                          placement={placements[f.key]}
+                          onChange={(pos) => setPlacements(prev => ({ ...prev, [f.key]: pos }))}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            /* Desktop: botones simples que activan el clic en canvas */
+            <div className="grid grid-cols-1 gap-2">
+              {FIELD_DEFS.map((f) => {
+                const placed   = !!placements[f.key]
+                const isActive = activeField === f.key
+                return (
+                  <button
+                    key={f.key}
+                    onClick={() => setActiveField(isActive ? null : f.key)}
+                    className={`w-full px-4 py-3 rounded-xl border text-sm font-semibold text-left flex items-center gap-3 transition-all ${
+                      isActive
+                        ? 'border-naranja text-naranja bg-naranja-pale outline outline-2 outline-naranja shadow-md'
+                        : placed
+                          ? 'border-verde text-verde bg-verde-pale'
+                          : 'border-gray-200 text-gray-600 bg-gray-50 hover:border-verde/40'
+                    }`}
+                  >
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-bold ${
+                      isActive ? 'bg-naranja text-white' : placed ? 'bg-verde text-white' : 'bg-gray-200 text-gray-500'
+                    }`}>
+                      {placed ? '✓' : isActive ? '→' : '+'}
                     </span>
-                  )}
-                </button>
-              )
-            })}
-          </div>
+                    <span>{f.label}</span>
+                    {isActive && <span className="ml-auto text-[10px] text-naranja font-normal">Clic en imagen →</span>}
+                    {placed && !isActive && (
+                      <span className="ml-auto text-[10px] text-gray-400 font-normal tabular-nums">
+                        {Math.round(placements[f.key].xPct * 100)}%, {Math.round(placements[f.key].yPct * 100)}%
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          )}
 
           <div className="mt-6">
             <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
