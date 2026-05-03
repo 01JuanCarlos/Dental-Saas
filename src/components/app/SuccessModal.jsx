@@ -4,7 +4,9 @@ export default function SuccessModal({ onDownload, onShare, onClose }) {
   return (
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="bg-white rounded-3xl p-8 w-full max-w-sm text-center shadow-2xl">
-        <div className="text-6xl mb-4">✅</div>
+        <div className="flex justify-center text-6xl mb-4">
+          <img src="https://images.icon-icons.com/1506/PNG/512/emblemdefault_103756.png" alt="" width={100} />
+        </div>
         <h3 className="text-2xl font-bold text-verde mb-2" style={{ fontFamily: 'Syne' }}>¡Receta Lista!</h3>
         <p className="text-gray-500 text-sm mb-8">Tu receta fue generada exitosamente.</p>
 

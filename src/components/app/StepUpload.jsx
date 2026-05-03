@@ -57,7 +57,7 @@ export default function StepUpload({ onImageSelected, onUseDefault }) {
           </div>
           <input ref={inputRef} type="file" accept="image/png,image/jpeg" className="hidden" onChange={(e) => handleFile(e.target.files[0])} />
         </label>
-
+{/* 
         <div className="flex items-center gap-4 mb-5">
           <div className="flex-1 h-px bg-gray-200" />
           <span className="text-xs text-gray-400 font-medium">o también puedes</span>
@@ -77,7 +77,7 @@ export default function StepUpload({ onImageSelected, onUseDefault }) {
           </div>
           <div className="ml-auto text-gray-300 group-hover:text-verde transition-colors font-bold text-lg">→</div>
         </button>
-
+*/}
         <p className="text-center text-xs text-gray-400 mt-8">
           💡 Tip: Cualquier tamaño funciona — el sistema ajustará el tamaño de fuente automáticamente según las dimensiones de tu imagen.
         </p>

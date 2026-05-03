@@ -41,7 +41,7 @@ export default function AppPage() {
           setStep(3)
         }
       })
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   const handleImageSelected = (blob, url) => {
@@ -67,13 +67,17 @@ export default function AppPage() {
     <div className="min-h-screen bg-[#f9fbfa] flex flex-col">
 
       {/* Topbar */}
-      <div className="bg-verde px-6 py-3 flex items-center gap-4 shadow-lg flex-shrink-0">
+      <div className=" px-6 py-3 flex items-center gap-4 shadow-lg flex-shrink-0">
         <Link to="/" className="flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors">
           <ArrowLeft className="w-4 h-4" />
           Inicio
         </Link>
-        <div className="flex-1 flex items-center justify-center">
-          <span className="text-white font-syne font-extrabold text-lg">🦷 Recepta</span>
+        <div className="flex-1 flex items-center justify-center" >
+          <span className="text-white font-syne font-extrabold text-lg" 
+          style={{
+            display: 'flex',
+            justifyContent: 'center'}}><img src="/02-horizontal-fondo-claro.svg" alt="" />
+          </span>
         </div>
         <div className="text-white/40 text-xs hidden md:block">v2.0</div>
       </div>
@@ -87,16 +91,14 @@ export default function AppPage() {
             return (
               <div key={s.id} className="flex items-center">
                 <div className="flex flex-col items-center gap-1.5">
-                  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 ${
-                    done ? 'bg-verde border-verde text-white'
-                    : active ? 'bg-white border-verde text-verde shadow-md shadow-verde/20'
-                    : 'bg-white border-gray-200 text-gray-300'
-                  }`}>
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 ${done ? 'bg-verde border-verde text-white'
+                      : active ? 'bg-white border-verde text-verde shadow-md shadow-verde/20'
+                        : 'bg-white border-gray-200 text-gray-300'
+                    }`}>
                     {done ? <Check className="w-4 h-4" /> : s.id}
                   </div>
-                  <span className={`text-xs font-semibold hidden sm:block transition-colors ${
-                    active ? 'text-verde' : done ? 'text-verde/60' : 'text-gray-300'
-                  }`}>{s.label}</span>
+                  <span className={`text-xs font-semibold hidden sm:block transition-colors ${active ? 'text-verde' : done ? 'text-verde/60' : 'text-gray-300'
+                    }`}>{s.label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
                   <div className={`w-24 md:w-36 h-0.5 mx-3 mb-5 rounded-full transition-all duration-500 ${step > s.id ? 'bg-verde' : 'bg-gray-200'}`} />

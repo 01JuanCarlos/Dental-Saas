@@ -5,8 +5,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <div className="footer-logo-icon">🦷</div>
-              Recepta
+             <img src="/02-horizontal-fondo-claro.svg" alt="" />
             </div>
             <p className="footer-tagline">La plataforma de recetas odontológicas más rápida de Latinoamérica. Hecha por y para dentistas.</p>
             <div className="footer-socials">

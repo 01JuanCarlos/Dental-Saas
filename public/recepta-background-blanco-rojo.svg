@@ -1,0 +1,115 @@
+<svg width="1440" height="600" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <style>
+      .dot      { fill: rgba(232,37,58,0.8); }
+      .dot-sm   { fill: rgba(232,37,58,0.35); }
+      .line     { stroke: rgba(232,37,58,0.2); stroke-width: 1; fill: none; }
+      .line-b   { stroke: rgba(232,37,58,0.45); stroke-width: 1.2; fill: none; }
+      .grid     { stroke: rgba(232,37,58,0.07); stroke-width: 0.6; fill: none; }
+      .hex      { fill: none; stroke: rgba(232,37,58,0.22); stroke-width: 1; }
+      .ring     { fill: none; stroke: rgba(232,37,58,0.4); stroke-width: 1.2; }
+      .ring-out { fill: none; stroke: rgba(232,37,58,0.12); stroke-width: 0.8; }
+      .plus     { fill: rgba(232,37,58,0.22); }
+    </style>
+  </defs>
+
+  <!-- Fondo blanco -->
+  <rect width="1440" height="600" fill="#ffffff"/>
+
+  <!-- Resplandor suave esquinas -->
+  <rect x="0" y="0" width="500" height="600" fill="rgba(232,37,58,0.025)"/>
+  <rect x="950" y="200" width="490" height="400" fill="rgba(232,37,58,0.018)"/>
+
+  <!-- GRID -->
+  <line x1="0" y1="100" x2="1440" y2="100" class="grid"/>
+  <line x1="0" y1="200" x2="1440" y2="200" class="grid"/>
+  <line x1="0" y1="300" x2="1440" y2="300" class="grid"/>
+  <line x1="0" y1="400" x2="1440" y2="400" class="grid"/>
+  <line x1="0" y1="500" x2="1440" y2="500" class="grid"/>
+  <line x1="120"  y1="0" x2="120"  y2="600" class="grid"/>
+  <line x1="240"  y1="0" x2="240"  y2="600" class="grid"/>
+  <line x1="360"  y1="0" x2="360"  y2="600" class="grid"/>
+  <line x1="480"  y1="0" x2="480"  y2="600" class="grid"/>
+  <line x1="600"  y1="0" x2="600"  y2="600" class="grid"/>
+  <line x1="720"  y1="0" x2="720"  y2="600" class="grid"/>
+  <line x1="840"  y1="0" x2="840"  y2="600" class="grid"/>
+  <line x1="960"  y1="0" x2="960"  y2="600" class="grid"/>
+  <line x1="1080" y1="0" x2="1080" y2="600" class="grid"/>
+  <line x1="1200" y1="0" x2="1200" y2="600" class="grid"/>
+  <line x1="1320" y1="0" x2="1320" y2="600" class="grid"/>
+
+  <!-- RED DE LÍNEAS -->
+  <line x1="100"  y1="100" x2="300"  y2="200" class="line"/>
+  <line x1="300"  y1="200" x2="480"  y2="100" class="line"/>
+  <line x1="480"  y1="100" x2="680"  y2="300" class="line"/>
+  <line x1="680"  y1="300" x2="900"  y2="200" class="line"/>
+  <line x1="900"  y1="200" x2="1100" y2="300" class="line"/>
+  <line x1="1100" y1="300" x2="1320" y2="200" class="line"/>
+  <line x1="1320" y1="200" x2="1440" y2="100" class="line"/>
+  <line x1="100"  y1="100" x2="200"  y2="400" class="line"/>
+  <line x1="200"  y1="400" x2="480"  y2="500" class="line"/>
+  <line x1="480"  y1="500" x2="680"  y2="300" class="line"/>
+  <line x1="480"  y1="500" x2="760"  y2="540" class="line"/>
+  <line x1="760"  y1="540" x2="1100" y2="300" class="line-b"/>
+  <line x1="1100" y1="300" x2="1320" y2="480" class="line"/>
+  <line x1="1320" y1="480" x2="1440" y2="400" class="line"/>
+  <line x1="300"  y1="200" x2="200"  y2="400" class="line-b"/>
+  <line x1="900"  y1="200" x2="760"  y2="540" class="line"/>
+  <line x1="680"  y1="300" x2="760"  y2="540" class="line"/>
+  <line x1="480"  y1="100" x2="480"  y2="500" class="line"/>
+  <line x1="1100" y1="300" x2="1200" y2="500" class="line"/>
+  <line x1="1200" y1="500" x2="1320" y2="480" class="line"/>
+  <line x1="0"    y1="300" x2="100"  y2="100" class="line-b"/>
+  <line x1="0"    y1="300" x2="200"  y2="400" class="line"/>
+  <line x1="1320" y1="200" x2="1320" y2="480" class="line"/>
+  <line x1="900"  y1="200" x2="1100" y2="500" class="line"/>
+  <line x1="1100" y1="500" x2="1200" y2="500" class="line"/>
+
+  <!-- HEXÁGONOS -->
+  <polygon points="220,270 242,258 264,270 264,294 242,306 220,294" class="hex"/>
+  <polygon points="680,110 706,96  732,110 732,138 706,152 680,138" class="hex"/>
+  <polygon points="1020,380 1046,366 1072,380 1072,408 1046,422 1020,408" class="hex"/>
+  <polygon points="1260,80  1282,68  1304,80  1304,104 1282,116 1260,104" class="hex"/>
+
+  <!-- CRUCES médicas -->
+  <rect x="548" y="340" width="6" height="36" rx="3" class="plus"/>
+  <rect x="534" y="354" width="32" height="6" rx="3" class="plus"/>
+  <rect x="820" y="60"  width="4" height="24" rx="2" class="plus"/>
+  <rect x="810" y="70"  width="24" height="4" rx="2" class="plus"/>
+  <rect x="1180" y="440" width="4" height="22" rx="2" class="plus"/>
+  <rect x="1171" y="449" width="22" height="4" rx="2" class="plus"/>
+
+  <!-- NODOS -->
+  <circle cx="100"  cy="100" r="7"  class="dot"/>
+  <circle cx="300"  cy="200" r="8"  class="dot"/>
+  <circle cx="480"  cy="100" r="6"  class="dot"/>
+  <circle cx="680"  cy="300" r="10" class="dot"/>
+  <circle cx="900"  cy="200" r="7"  class="dot"/>
+  <circle cx="1100" cy="300" r="8"  class="dot"/>
+  <circle cx="1320" cy="200" r="6"  class="dot"/>
+  <circle cx="200"  cy="400" r="6"  class="dot"/>
+  <circle cx="480"  cy="500" r="7"  class="dot"/>
+  <circle cx="760"  cy="540" r="8"  class="dot"/>
+  <circle cx="1320" cy="480" r="6"  class="dot"/>
+  <circle cx="1200" cy="500" r="5"  class="dot-sm"/>
+  <circle cx="1100" cy="500" r="4"  class="dot-sm"/>
+  <circle cx="0"    cy="300" r="5"  class="dot"/>
+  <circle cx="1440" cy="100" r="4"  class="dot-sm"/>
+  <circle cx="1440" cy="400" r="4"  class="dot-sm"/>
+  <circle cx="580"  cy="200" r="3"  class="dot-sm"/>
+  <circle cx="800"  cy="380" r="3"  class="dot-sm"/>
+  <circle cx="400"  cy="340" r="3"  class="dot-sm"/>
+  <circle cx="1000" cy="120" r="3"  class="dot-sm"/>
+  <circle cx="1160" cy="440" r="3"  class="dot-sm"/>
+  <circle cx="640"  cy="460" r="3"  class="dot-sm"/>
+  <circle cx="160"  cy="140" r="3"  class="dot-sm"/>
+  <circle cx="1380" cy="340" r="3"  class="dot-sm"/>
+
+  <!-- Anillos nodo central -->
+  <circle cx="680" cy="300" r="20" class="ring"/>
+  <circle cx="680" cy="300" r="32" class="ring-out"/>
+  <circle cx="300" cy="200" r="15" class="ring"/>
+
+  <!-- Diagonal decorativa muy sutil -->
+  <line x1="-50" y1="600" x2="600" y2="0" stroke="rgba(232,37,58,0.04)" stroke-width="120" fill="none"/>
+</svg>

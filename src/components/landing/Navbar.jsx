@@ -15,22 +15,20 @@ export default function Navbar() {
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
       transition: 'all 0.35s ease',
-      background: scrolled ? 'rgba(8,15,30,0.96)' : 'transparent',
+      background: scrolled ? 'rgba(255, 255, 255, 0.96)' : 'transparent',
       backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      borderBottom: scrolled ? '1px solid rgba(255,255,255,0.07)' : 'none',
       padding: scrolled ? '12px 0' : '22px 0',
     }}>
       <div className="nav-inner">
         <div className="nav-logo">
-          <div className="nav-logo-icon">🦷</div>
-          Recepta
+          <img src="/02-horizontal-fondo-claro.svg" alt="" style={{height: 64}} />
         </div>
         <div className="nav-links">
-          {[['#features','Características'],['#how','Cómo funciona'],['#pricing','Precios'],['#testimonials','Testimonios']].map(([href, label]) => (
+          {[['#features', 'Características'], ['#how', 'Cómo funciona'], ['#pricing', 'Precios'], ['#testimonials', 'Testimonios']].map(([href, label]) => (
             <a key={href} href={href} className="nav-link">{label}</a>
           ))}
         </div>
-        <button className="nav-cta" onClick={() => navigate('/app')}>Abrir App →</button>
+        <button className="nav-cta" onClick={() => window.open('/app', '_blank', 'noreferrer')}>Abrir App →</button>
       </div>
     </nav>
   )

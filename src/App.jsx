@@ -5,7 +5,8 @@ import AppPage from './pages/AppPage.jsx'
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+     {/*  <Route path="/" element={<LandingPage />} />*/}
+      <Route path="/" element={<AppPage />}/>
       <Route path="/app" element={<AppPage />} />
       <Route path="/app/:stepParam" element={<AppPage />} />
     </Routes>
